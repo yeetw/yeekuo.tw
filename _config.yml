@@ -1,4 +1,5 @@
 url: https://yeekuo.tw
+permalink: /:title/
 
 plugins:
   - jekyll-redirect-from
