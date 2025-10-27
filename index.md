@@ -1,3 +1,3 @@
 ---
-redirect_to: https://read.yeekuo.tw
+redirect_to: https://linktr.ee/yeekuo
 ---
