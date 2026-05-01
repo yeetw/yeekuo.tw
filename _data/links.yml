@@ -1,0 +1,25 @@
+# 主標題：同時用於畫面顯示與瀏覽器分頁 <title>
+title: "生活的風景"
+
+# 圓形 logo 圖片 URL（建議 1:1，CSS 會 crop 成圓形）
+# 第一版用 picsum 占位圖；上線前由 site owner 換成真正的 Van Gogh 畫作 URL
+logo: "https://picsum.photos/seed/yeekuo-logo/256/256"
+
+# logo 下方的 icon row
+profile_icons:
+  - icon: "fa-solid fa-envelope"
+    url: "mailto:hello@yeekuo.tw"
+  - icon: "fa-brands fa-github"
+    url: "https://github.com/yeekuo"
+
+# 主要連結卡片清單
+links:
+  - title: "閱讀旅程 📖"
+    image: "https://picsum.photos/seed/yeekuo-read/120/120"
+    url: "https://read.yeekuo.tw"
+  - title: "追劇筆記 🛏️"
+    image: "https://picsum.photos/seed/yeekuo-drama/120/120"
+    url: "https://drama.yeekuo.tw"
+  - title: "跑步日誌 🏃"
+    image: "https://picsum.photos/seed/yeekuo-run/120/120"
+    url: "https://run.yeekuo.tw"
