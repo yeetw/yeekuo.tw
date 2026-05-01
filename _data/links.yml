@@ -1,25 +1,24 @@
-# 主標題：同時用於畫面顯示與瀏覽器分頁 <title>
 title: "生活的風景"
 
-# 圓形 logo 圖片 URL（建議 1:1，CSS 會 crop 成圓形）
-# 第一版用 picsum 占位圖；上線前由 site owner 換成真正的 Van Gogh 畫作 URL
-logo: "https://picsum.photos/seed/yeekuo-logo/256/256"
+logo: "https://ugc.production.linktr.ee/1020d8bb-5148-45e6-b554-04ed717764a1_vangoghmuseum-s0025V1962-800.jpeg?io=true&size=avatar-v3_0"
 
-# logo 下方的 icon row
+# from https://fontawesome.com/icons
 profile_icons:
-  - icon: "fa-solid fa-envelope"
-    url: "mailto:hello@yeekuo.tw"
+  - icon: "fa-regular fa-envelope"
+    url: "mailto:yee@yeekuo.tw"
   - icon: "fa-brands fa-github"
-    url: "https://github.com/yeekuo"
+    url: "https://github.com/yeetw"
+  - icon: "fa-brands fa-instagram"
+    url: "https://www.instagram.com/yeekuoooo/"
 
 # 主要連結卡片清單
 links:
   - title: "閱讀旅程 📖"
-    image: "https://picsum.photos/seed/yeekuo-read/120/120"
+    image: "https://read.yeekuo.tw/assets/logo.png"
     url: "https://read.yeekuo.tw"
   - title: "追劇筆記 🛏️"
-    image: "https://picsum.photos/seed/yeekuo-drama/120/120"
+    image: "https://drama.yeekuo.tw/assets/logo.png"
     url: "https://drama.yeekuo.tw"
   - title: "跑步日誌 🏃"
-    image: "https://picsum.photos/seed/yeekuo-run/120/120"
+    image: "https://ugc.production.linktr.ee/32b85ac7-0774-47ac-af30-3507fda8fa1d_image.png?io=true&size=thumbnail-stack_v1_0"
     url: "https://run.yeekuo.tw"
