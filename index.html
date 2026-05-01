@@ -90,6 +90,11 @@
       gap: 14px;
     }
 
+    .link-list li {
+      position: relative;
+      transition: transform 0.15s ease;
+    }
+
     .link-card {
       position: relative;
       display: flex;
@@ -101,25 +106,35 @@
       color: var(--text-on-card);
       border-radius: 0;
       text-decoration: none;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: box-shadow 0.15s ease;
     }
 
-    .link-card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-
-    .link-card::after {
+    .link-card__copy {
       position: absolute;
       right: 20px;
       top: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      background: transparent;
       color: var(--text-muted);
-      content: "\f142";
-      font-family: "Font Awesome 6 Free";
-      font-size: 18px;
-      font-weight: 900;
-      line-height: 1;
+      cursor: pointer;
       transform: translateY(-50%);
+      transition: color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .link-card__copy.is-copying,
+    .link-card__copy:focus-visible {
+      color: var(--text-on-card);
+    }
+
+    .link-card__copy i {
+      font-size: 18px;
+      line-height: 1;
     }
 
     .link-card__image {
@@ -137,6 +152,42 @@
       font-size: 15px;
       font-weight: 500;
       line-height: 1.2;
+    }
+
+    .copy-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      z-index: 10;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(32, 36, 32, 0.88);
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 1;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 10px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .copy-toast.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .link-list li:hover {
+        transform: translateY(-1px);
+      }
+
+      .link-list li:hover .link-card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .link-card__copy:hover {
+        color: var(--text-on-card);
+      }
     }
 
     @media (max-width: 600px) {
@@ -211,9 +262,62 @@
             <img class="link-card__image" src="{{ link.image }}" alt="" width="48" height="48">
             <span class="link-card__title">{{ link.title }}</span>
           </a>
+          <button class="link-card__copy" type="button" data-copy-url="{{ link.url | escape }}" aria-label="複製 {{ link.title | escape }} 連結">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+          </button>
         </li>
       {% endfor %}
     </ul>
   </main>
+
+  <div class="copy-toast" role="status" aria-live="polite">已複製連結</div>
+
+  <script>
+    const copyButtons = document.querySelectorAll(".link-card__copy");
+    const copyToast = document.querySelector(".copy-toast");
+    let copyToastTimer;
+    let activeCopyButton;
+
+    async function copyLink(url) {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(url);
+        return;
+      }
+
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      textArea.setAttribute("readonly", "");
+      textArea.style.position = "fixed";
+      textArea.style.top = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+
+    function showCopyToast(button) {
+      if (activeCopyButton && activeCopyButton !== button) {
+        activeCopyButton.classList.remove("is-copying");
+      }
+
+      activeCopyButton = button;
+      activeCopyButton.classList.add("is-copying");
+      copyToast.classList.add("is-visible");
+      clearTimeout(copyToastTimer);
+      copyToastTimer = setTimeout(() => {
+        copyToast.classList.remove("is-visible");
+        activeCopyButton.classList.remove("is-copying");
+        activeCopyButton.blur();
+        activeCopyButton = null;
+      }, 1000);
+    }
+
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        await copyLink(button.dataset.copyUrl);
+        showCopyToast(button);
+      });
+    });
+  </script>
 </body>
 </html>
