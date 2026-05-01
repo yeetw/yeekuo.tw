@@ -38,6 +38,22 @@
       text-align: center;
     }
 
+    .logo {
+      display: block;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .title {
+      margin: 0 0 16px;
+      color: var(--text-on-green);
+      font-size: 22px;
+      font-weight: 500;
+    }
+
     @media (max-width: 600px) {
       .container {
         margin: 0;
@@ -50,7 +66,10 @@
 </head>
 <body>
   <main class="container">
-    <p>placeholder</p>
+    <img class="logo"
+         src="{{ site.data.links.logo }}"
+         alt="{{ site.data.links.title }}">
+    <h1 class="title">{{ site.data.links.title }}</h1>
   </main>
 </body>
 </html>
