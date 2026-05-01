@@ -7,6 +7,46 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ site.data.links.title }}</title>
+  <style>
+    :root {
+      --bg-page: #7d8870;
+      --bg-container: #a4b09a;
+      --card-bg: #ffffff;
+      --text-on-green: #ffffff;
+      --text-on-card: #5b5b5b;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: var(--bg-page);
+      color: var(--text-on-card);
+      font-family: -apple-system, BlinkMacSystemFont,
+                   "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
+                   sans-serif;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 32px auto;
+      padding: 64px 32px;
+      background: var(--bg-container);
+      border-radius: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        padding: 48px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
   <main class="container">
