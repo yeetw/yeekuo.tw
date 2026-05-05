@@ -262,7 +262,11 @@
             <img class="link-card__image" src="{{ link.image }}" alt="" width="48" height="48">
             <span class="link-card__title">{{ link.title }}</span>
           </a>
-          <button class="link-card__copy" type="button" data-copy-url="{{ link.url | escape }}" aria-label="複製 {{ link.title | escape }} 連結">
+          <button class="link-card__copy"
+                  type="button"
+                  data-copy-url="{{ link.url | escape }}"
+                  data-copy-label="{{ link.url | remove: 'https://' | remove: 'http://' | escape }}"
+                  aria-label="複製 {{ link.title | escape }} 連結">
             <i class="fa-regular fa-copy" aria-hidden="true"></i>
           </button>
         </li>
@@ -276,6 +280,7 @@
     const copyButtons = document.querySelectorAll(".link-card__copy");
     const copyToast = document.querySelector(".copy-toast");
     let copyToastTimer;
+    let copyIconTimer;
     let activeCopyButton;
 
     async function copyLink(url) {
@@ -295,21 +300,49 @@
       textArea.remove();
     }
 
+    function setCopyIcon(button, isCopied) {
+      const icon = button.querySelector("i");
+
+      if (!icon) {
+        return;
+      }
+
+      icon.className = isCopied ? "fa-solid fa-check" : "fa-regular fa-copy";
+    }
+
+    function resetActiveCopyButton() {
+      if (!activeCopyButton) {
+        return;
+      }
+
+      activeCopyButton.classList.remove("is-copying");
+      setCopyIcon(activeCopyButton, false);
+      activeCopyButton.blur();
+      activeCopyButton = null;
+    }
+
     function showCopyToast(button) {
       if (activeCopyButton && activeCopyButton !== button) {
         activeCopyButton.classList.remove("is-copying");
+        setCopyIcon(activeCopyButton, false);
       }
 
       activeCopyButton = button;
       activeCopyButton.classList.add("is-copying");
+      setCopyIcon(activeCopyButton, true);
+      copyToast.textContent = `${button.dataset.copyLabel} 已複製`;
       copyToast.classList.add("is-visible");
+      clearTimeout(copyIconTimer);
       clearTimeout(copyToastTimer);
+      copyIconTimer = setTimeout(() => {
+        if (activeCopyButton === button) {
+          setCopyIcon(activeCopyButton, false);
+        }
+      }, 500);
       copyToastTimer = setTimeout(() => {
         copyToast.classList.remove("is-visible");
-        activeCopyButton.classList.remove("is-copying");
-        activeCopyButton.blur();
-        activeCopyButton = null;
-      }, 1000);
+        resetActiveCopyButton();
+      }, 1500);
     }
 
     copyButtons.forEach((button) => {
